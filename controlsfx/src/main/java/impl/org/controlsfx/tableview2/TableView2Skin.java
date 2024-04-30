@@ -200,7 +200,7 @@ public class TableView2Skin<S> extends TableViewSkinBase<S,S, TableView<S>, Tabl
      * 
      * @param tableView the {@link TableView2}
      */
-    public TableView2Skin(TableView2<S> tableView) {
+    public TableView2Skin(TableView2<S> tableView,java.util.function.Consumer<javafx.scene.control.TableRow<S>> postSetting) {
         super(tableView);
         
         this.flow = getVirtualFlow();
@@ -217,9 +217,14 @@ public class TableView2Skin<S> extends TableViewSkinBase<S,S, TableView<S>, Tabl
         // It prevents from setting a different row factory, unless developer  
         // chooses to unbind it and provide on his own risk a different row 
         // factory that may or may not work with TableView2 and row freezing.
-        tableView.rowFactoryProperty().bind(Bindings.createObjectBinding(
-                () -> param -> new TableRow2(tableView), tableView.skinProperty()));
-
+        /*tableView.rowFactoryProperty().bind(Bindings.createObjectBinding(
+                () -> param -> new TableRow2(tableView), tableView.skinProperty()));*/
+				tableView.rowFactoryProperty().bind(Bindings.createObjectBinding(
+                () -> param -> {TableRow2 row = new TableRow2(tableView); 
+                	if(postSetting != null){
+                		postSetting.accept(row);
+                	}
+                	 return row;}, tableView.skinProperty()));
         getCurrentlyFixedRow().addListener(currentlyFixedRowListener);
         this.tableView.getFixedRows().addListener(fixedRowsListener);
         this.tableView.getFixedColumns().addListener(fixedColumnsListener);

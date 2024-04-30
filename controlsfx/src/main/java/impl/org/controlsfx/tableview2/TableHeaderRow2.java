@@ -239,6 +239,7 @@ public class TableHeaderRow2 extends TableHeaderRow {
             if (rootHeader2 == null) {
                 createRootHeader();
             }
+            
             rootHeader2.layoutFixedColumns();
         }
         skin.getSouthHeader().updateScrollX();

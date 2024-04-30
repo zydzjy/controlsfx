@@ -807,9 +807,12 @@ public class TableView2<S> extends TableView<S> {
 
     /** {@inheritDoc} */
     @Override protected Skin<?> createDefaultSkin() {
-        return new TableView2Skin(this);
+    		return new TableView2Skin(this,this.postSetting);
     }
-    
+     java.util.function.Consumer<javafx.scene.control.TableRow<S>> postSetting;
+    public void setRowPostSetting(java.util.function.Consumer<javafx.scene.control.TableRow<S>> postSetting){
+    	this.postSetting = postSetting;
+    }
     /** {@inheritDoc} */
     @Override public String getUserAgentStylesheet() {
         /*
